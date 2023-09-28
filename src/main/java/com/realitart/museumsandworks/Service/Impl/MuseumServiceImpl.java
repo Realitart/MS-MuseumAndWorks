@@ -70,6 +70,7 @@ public class MuseumServiceImpl implements IMuseumService {
         try {
             List<Museum> getMuseums = _museumRepo.findByEnableTrue();
             return getMuseums.stream().map(museum -> new MuseumGetDTO(
+                    museum.getId(),
                     _departmentRepo.findById(museum.getDepartmentId()).orElseThrow(() -> new ResourceNotFoundException("Department", museum.getDepartmentId())).getName(),
                     museum.getName(),
                     museum.getDescription(),

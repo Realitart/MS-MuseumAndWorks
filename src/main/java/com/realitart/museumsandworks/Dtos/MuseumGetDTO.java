@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MuseumGetDTO {
+    private Long id;
     private String department;
     private String name;
     private String description;
