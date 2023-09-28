@@ -22,7 +22,8 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public OperationResponse createComment(Comment request) {
-        try{
+        try{            request.setId(null);
+
             _commentRepo.save(request);
             return new OperationResponse(true, "Comment creado correctamente");
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.realitart.museumsandworks.Controller;
 
 import com.realitart.museumsandworks.Domain.Museum;
 import com.realitart.museumsandworks.Dtos.MuseumCreateDTO;
+import com.realitart.museumsandworks.Dtos.MuseumGetDTO;
 import com.realitart.museumsandworks.Service.IMuseumService;
 import com.realitart.museumsandworks.share.mapping.entity.MuseumMapper;
 import com.realitart.museumsandworks.share.response.OperationResponse;
@@ -47,8 +48,8 @@ public class MuseumController {
     
     @GetMapping
     //@Operation(summary = "Get all museums")
-    ResponseEntity<Page<Museum>> getAllMuseums(Pageable pageable){
-            return ResponseEntity.ok(mapper.modelListToPage(museumService.getMuseums(),pageable));
+    ResponseEntity<Page<MuseumGetDTO>> getAllMuseums(Pageable pageable){
+            return ResponseEntity.ok(mapper.dtoListToPage(museumService.getMuseums(),pageable));
 
     }
 }

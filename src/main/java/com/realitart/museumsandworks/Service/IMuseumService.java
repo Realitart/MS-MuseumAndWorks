@@ -3,6 +3,7 @@ package com.realitart.museumsandworks.Service;
 
 
 import com.realitart.museumsandworks.Domain.Museum;
+import com.realitart.museumsandworks.Dtos.MuseumGetDTO;
 import com.realitart.museumsandworks.share.response.OperationResponse;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface IMuseumService {
 
     Museum getMuseum(Long museum);
 
-    List<Museum> getMuseums();
+    List<MuseumGetDTO> getMuseums();
 }

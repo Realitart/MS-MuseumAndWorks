@@ -23,6 +23,7 @@ public class ArtworkServiceImpl implements IArtworkService {
     @Override
     public OperationResponse createArtwork(Artwork request) {
         try{
+            request.setId(null);
             _artworkRepo.save(request);
             return new OperationResponse(true, "Artwork creado correctamente");
         } catch (Exception e) {
