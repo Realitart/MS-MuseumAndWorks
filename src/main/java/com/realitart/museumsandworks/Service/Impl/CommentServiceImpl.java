@@ -4,6 +4,7 @@ import com.realitart.museumsandworks.Domain.Artwork;
 import com.realitart.museumsandworks.Domain.Comment;
 import com.realitart.museumsandworks.Domain.Repositories.IArtworkRepository;
 import com.realitart.museumsandworks.Domain.Repositories.ICommentRepository;
+import com.realitart.museumsandworks.Dtos.CommentCreateDTO;
 import com.realitart.museumsandworks.Service.ICommentService;
 import com.realitart.museumsandworks.share.exceptions.ResourceNotFoundException;
 import com.realitart.museumsandworks.share.response.OperationResponse;
@@ -21,13 +22,18 @@ public class CommentServiceImpl implements ICommentService {
     IArtworkRepository _artworkRepo;
 
     @Override
-    public OperationResponse createComment(Comment request) {
-        try{            request.setId(null);
-
-            _commentRepo.save(request);
+    public OperationResponse createComment(CommentCreateDTO request) {
+        try{
+            //New comment
+            Comment comment = new Comment();
+            comment.setId(null);
+            comment.setDescription(request.getDescription());
+            comment.setUserId(request.getUserId());
+            comment.setArtworkId(_artworkRepo.findById(request.getArtworkId()).orElseThrow(() -> new ResourceNotFoundException(ENTITY, request.getArtworkId())));
+            _commentRepo.save(comment);
             return new OperationResponse(true, "Comment creado correctamente");
         } catch (Exception e) {
-            return new OperationResponse(false, "Error al crear el Comment");
+            return new OperationResponse(false, "Error al crear el Comment - " + e.getMessage());
         }
     }
 
