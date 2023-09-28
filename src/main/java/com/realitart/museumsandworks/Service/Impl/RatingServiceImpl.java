@@ -22,7 +22,8 @@ public class RatingServiceImpl implements IRatingService {
 
     @Override
     public OperationResponse createRating(Rating request) {
-        try{
+        try{            request.setId(null);
+
             _ratingRepo.save(request);
             return new OperationResponse(true, "Rating creado correctamente");
         } catch (Exception e) {

@@ -18,7 +18,8 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
     @Override
     public OperationResponse createDepartment(Department request) {
-        try{
+        try{            request.setId(null);
+
             _departmentRepo.save(request);
             return new OperationResponse(true, "Department creado correctamente");
         } catch (Exception e) {

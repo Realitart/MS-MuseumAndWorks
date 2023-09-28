@@ -18,7 +18,8 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public OperationResponse createCategory(Category request) {
-        try{
+        try{            request.setId(null);
+
             _categoryRepo.save(request);
             return new OperationResponse(true, "Category creado correctamente");
         } catch (Exception e) {

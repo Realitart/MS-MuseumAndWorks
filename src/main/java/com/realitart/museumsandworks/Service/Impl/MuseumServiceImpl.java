@@ -1,7 +1,9 @@
 package com.realitart.museumsandworks.Service.Impl;
 
 import com.realitart.museumsandworks.Domain.Museum;
+import com.realitart.museumsandworks.Domain.Repositories.IDepartmentRepository;
 import com.realitart.museumsandworks.Domain.Repositories.IMuseumRepository;
+import com.realitart.museumsandworks.Dtos.MuseumGetDTO;
 import com.realitart.museumsandworks.Service.IMuseumService;
 import com.realitart.museumsandworks.share.exceptions.ResourceNotFoundException;
 import com.realitart.museumsandworks.share.response.OperationResponse;
@@ -16,9 +18,13 @@ public class MuseumServiceImpl implements IMuseumService {
     @Autowired
     IMuseumRepository _museumRepo;
 
+    @Autowired
+    IDepartmentRepository _departmentRepo;
+
     @Override
     public OperationResponse createMuseum(Museum request) {
-        try{
+        try{            request.setId(null);
+
             _museumRepo.save(request);
             return new OperationResponse(true, "Museum creado correctamente");
         } catch (Exception e) {
@@ -60,9 +66,16 @@ public class MuseumServiceImpl implements IMuseumService {
     }
 
     @Override
-    public List<Museum> getMuseums() {
+    public List<MuseumGetDTO> getMuseums() {
         try {
-            return _museumRepo.findByEnableTrue();
+            List<Museum> getMuseums = _museumRepo.findByEnableTrue();
+            return getMuseums.stream().map(museum -> new MuseumGetDTO(
+                    _departmentRepo.findById(museum.getDepartmentId()).orElseThrow(() -> new ResourceNotFoundException("Department", museum.getDepartmentId())).getName(),
+                    museum.getName(),
+                    museum.getDescription(),
+                    museum.getAddress(),
+                    museum.getImages()
+            )).toList();
         } catch (Exception e) {
             throw new ResourceNotFoundException("Error al obtener los Museums", e);
         }
