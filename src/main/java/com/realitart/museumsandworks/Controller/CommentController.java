@@ -24,7 +24,7 @@ public class CommentController {
     @PostMapping
     //@Operation(summary = "Create a new comment")
     OperationResponse createComment(@Valid @RequestBody CommentCreateDTO request){
-        return commentService.createComment(mapper.toModel(request));
+        return commentService.createComment(request);
     }
     
     @PutMapping("/{commentId}")
